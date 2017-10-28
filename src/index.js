@@ -4,15 +4,19 @@ import Mass from './grid/mass';
 import Spring from './grid/spring';
 
 function init() {
-    const frameRate = 1;
+    const frameRate = 60;
     const millisBetweenUpdate = 1000 / frameRate;
 
     //canvas.addEventListener("mousemove", mouseMove, false);
-    //canvas.addEventListener("mousedown", mouseDown, true);
+    canvas.addEventListener("mousedown", mouseDown, true);
     //canvas.addEventListener("mouseup", mouseUp, false);
     setInterval(update, millisBetweenUpdate);
 
     context = canvas.getContext("2d");
+}
+
+function mouseDown(e) {
+    forceGrid.applyForceAt(e.x, e.y);
 }
 
 function hasCanvasChanged() {
@@ -24,7 +28,7 @@ function resize() {
     canvas.height = window.innerHeight;
 
     if (hasCanvasChanged()) {
-        forceGrid = new ForceGrid(canvas.width, canvas.height, 10);
+        forceGrid = new ForceGrid(canvas.width, canvas.height, 4);
     }
 }
 

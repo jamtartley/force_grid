@@ -21,23 +21,22 @@ class Mass {
     }
 
     update() {
-        //console.log(this.position);
-        //this.velocity.add(this.acceleration);
-        //this.position.add(this.velocity);
-        //this.acceleration.multiply(0);
+        this.velocity.add(this.acceleration);
+        this.position.add(this.velocity);
+        this.acceleration.multiplyScalar(0);
 
-        //if (this.velocity.getMagnitudeSquared() <= 0.001) {
-            //this.velocity.multiply(0);
-        //}
+        if (this.velocity.getMagnitudeSquared() <= 0.001) {
+            this.velocity.multiplyScalar(0);
+        }
 
-        //this.velocity.multiply(this.damping);
-        //this.damping = this.initialDamping;
+        this.velocity.multiplyScalar(this.damping);
+        this.damping = this.initialDamping;
     }
 
     draw(context) {
         context.beginPath();
         context.fillStyle = "white";
-        context.fillRect(this.position.x, this.position.y, 1, 1);
+        context.fillRect(this.position.x, this.position.y, 4, 4);
     }
 }
 

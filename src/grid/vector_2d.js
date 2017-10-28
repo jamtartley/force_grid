@@ -9,7 +9,7 @@ class Vector2D {
     }
 
     getMagnitudeSquared() {
-        return this.x * this.x + this.y * this.y;
+        return Math.abs(this.x * this.x + this.y * this.y);
     }
 
     add(other) {

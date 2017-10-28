@@ -10,8 +10,8 @@ class ForceGrid {
         this.spacing = Math.min(width / desiredCells, height / desiredCells);
         this.masses = [];
 
-        this.cellsWide = width / this.spacing;
-        this.cellsHigh = height / this.spacing;
+        this.cellsWide = width / this.spacing + 1;
+        this.cellsHigh = height / this.spacing + 1;
         let fixedMasses = [];
 
         for (let i = 0; i < this.cellsHigh; i++) {
@@ -25,24 +25,40 @@ class ForceGrid {
             for (let j = 0; j < this.cellsWide; j++) {
                 if (i === 0 || j === 0 || i === this.cellsHigh - 1 || j === this.cellsWide - 1) {
                     let firstMass = fixedMasses[Utils.getIndexFromVector(j, i, this.cellsWide)];
-                    let secondMass = this.masses[Utils.getIndexFromVector(j, i, this.cellsWide)];
+                    let secondMass = this.getMassAt(j, i);
+                    let s = new Spring(firstMass, secondMass, 0.1, 0.1);
+                    console.log(s);
 
-                    this.springs.push(new Spring(firstMass, secondMass, 0.1, 0.1));
+                    this.springs.push(s);
                 }
 
                 if (j > 0) {
-                    let firstMass = this.masses[Utils.getIndexFromVector(j - 1, i, this.cellsWide)];
-                    let secondMass = this.masses[Utils.getIndexFromVector(j, i, this.cellsWide)];
+                    let firstMass = this.getMassAt(j - 1, i);
+                    let secondMass = this.getMassAt(j, i);
 
                     this.springs.push(new Spring(firstMass, secondMass, 0.28, 0.1));
                 }
 
                 if (i > 0) {
-                    let firstMass = this.masses[Utils.getIndexFromVector(j, i - 1, this.cellsWide)];
-                    let secondMass = this.masses[Utils.getIndexFromVector(j, i, this.cellsWide)];
+                    let firstMass = this.getMassAt(j, i - 1);
+                    let secondMass = this.getMassAt(j, i);
 
                     this.springs.push(new Spring(firstMass, secondMass, 0.28, 0.1));
                 }
+            }
+        }
+    }
+
+    applyForceAt(x, y) {
+        const force = new Vector2D(10, 10);
+        const radius = 100;
+        let vec = new Vector2D(x, y);
+
+        for (let mass of this.masses) {
+            let dist2 = Vector2D.getDistanceSquared(vec, mass.position);
+            if (dist2 < radius * radius) {
+                mass.applyForce(force);
+                mass.multiplyDamping(0.6);
             }
         }
     }
@@ -70,30 +86,9 @@ class ForceGrid {
     }
 
     draw(context) {
-        const thicknessFactor = 0.25;
-        const thickness = this.spacing * thicknessFactor;
-        const colour = 'rgb(25, 25, 25)';
-
-        for (let i = 0; i < this.cellsHigh; i++) {
-            for (let j = 0; j < this.cellsWide; j++) {
-                let current = this.getMassAt(j, i); 
-                let adjacent = [
-                    this.getMassAt(j, i - 1), 
-                    this.getMassAt(j - 1, i),
-                    this.getMassAt(j, i + 1),
-                    this.getMassAt(j + 1, i)
-                ]
-
-                adjacent = adjacent.filter(function(mass) {
-                    return mass !== undefined;
-                });
-
-                console.log(adjacent);
-            }
+        for (let spring of this.springs) {
+            spring.draw(context);
         }
-        //for (let spring of this.springs) {
-            //spring.draw(context);
-        //}
         //for (let mass of this.masses) {
             //mass.draw(context);
         //}

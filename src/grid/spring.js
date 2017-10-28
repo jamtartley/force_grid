@@ -2,7 +2,7 @@ import Vector2D from './vector_2d';
 
 class Spring {
     constructor(firstMass, secondMass, stiffness, damping) {
-        const targetLengthFactor = 0.95;
+        const targetLengthFactor = 1;
 
         this.firstMass = firstMass;
         this.secondMass = secondMass;
@@ -22,7 +22,6 @@ class Spring {
 
         deltaPos.divideScalar(length);
         deltaPos.multiplyScalar(length - this.targetLength);
-
         let deltaVel = Vector2D.getSubtractionVector(this.secondMass.velocity, this.firstMass.velocity);
         deltaPos.multiplyScalar(this.stiffness);
         deltaVel.multiplyScalar(this.damping);
@@ -36,8 +35,8 @@ class Spring {
         context.beginPath();
         context.moveTo(this.firstMass.position.x, this.firstMass.position.y);
         context.lineTo(this.secondMass.position.x, this.secondMass.position.y);
-        context.strokeStyle = 'red';
-        context.lineWidth = 10;
+        context.strokeStyle = 'rgb(25, 25, 25)';
+        context.lineWidth = 8;
         context.stroke();
     }
 }
