@@ -48,14 +48,29 @@ class ForceGrid {
     }
 
     applyForceAt(x, y) {
-        const force = new Vector2D(10, 10);
+        const force = 8;
         const radius = 100;
         let vec = new Vector2D(x, y);
 
         for (let mass of this.masses) {
             let dist2 = Vector2D.getDistanceSquared(vec, mass.position);
             if (dist2 < radius * radius) {
-                mass.applyForce(force);
+                let forceVec;
+
+                if (mass.position.x <= vec.x) {
+                    if (mass.position.y <= vec.y) {
+                        forceVec = new Vector2D(force, force);    
+                    } else {
+                        forceVec = new Vector2D(force, -force);    
+                    }
+                } else {
+                    if (mass.position.y <= vec.y) {
+                        forceVec = new Vector2D(-force, force);    
+                    } else {
+                        forceVec = new Vector2D(-force, -force);    
+                    }
+                }
+                mass.applyForce(forceVec);
                 mass.multiplyDamping(0.6);
             }
         }

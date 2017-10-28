@@ -58,7 +58,7 @@ function update() {
     prevCanvasHeight = canvas.height;
 }
 
-const GRID_WIDTH = 10;
+const GRID_WIDTH = 16;
 
 var canvas = document.getElementById('canvas');
 var context;
