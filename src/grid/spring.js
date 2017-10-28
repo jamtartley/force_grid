@@ -31,12 +31,12 @@ class Spring {
         this.secondMass.applyForce(force);
     }
 
-    draw(context) {
+    draw(context, thickness) {
         context.beginPath();
         context.moveTo(this.firstMass.position.x, this.firstMass.position.y);
         context.lineTo(this.secondMass.position.x, this.secondMass.position.y);
         context.strokeStyle = 'rgb(25, 25, 25)';
-        context.lineWidth = 8;
+        context.lineWidth = thickness;
         context.stroke();
     }
 }

@@ -7,16 +7,25 @@ function init() {
     const frameRate = 60;
     const millisBetweenUpdate = 1000 / frameRate;
 
-    //canvas.addEventListener("mousemove", mouseMove, false);
+    canvas.addEventListener("mousemove", mouseMove, false);
     canvas.addEventListener("mousedown", mouseDown, true);
-    //canvas.addEventListener("mouseup", mouseUp, false);
+    canvas.addEventListener("mouseup", mouseUp, false);
     setInterval(update, millisBetweenUpdate);
 
     context = canvas.getContext("2d");
 }
 
+function mouseMove(e) {
+    currentMousePos.x = e.x;
+    currentMousePos.y = e.y;
+}
+
 function mouseDown(e) {
-    forceGrid.applyForceAt(e.x, e.y);
+    isMouseDown = true;
+}
+
+function mouseUp(e) {
+    isMouseDown = false;
 }
 
 function hasCanvasChanged() {
@@ -28,12 +37,15 @@ function resize() {
     canvas.height = window.innerHeight;
 
     if (hasCanvasChanged()) {
-        forceGrid = new ForceGrid(canvas.width, canvas.height, 4);
+        forceGrid = new ForceGrid(canvas.width, canvas.height, GRID_WIDTH);
     }
 }
 
 function update() {
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    if (isMouseDown) {
+        forceGrid.applyForceAt(currentMousePos.x, currentMousePos.y);
+    }
 
     resize();
 
@@ -46,6 +58,8 @@ function update() {
     prevCanvasHeight = canvas.height;
 }
 
+const GRID_WIDTH = 10;
+
 var canvas = document.getElementById('canvas');
 var context;
 var forceGrid;
@@ -53,6 +67,8 @@ var canvasWidth = 0;
 var canvasHeight = 0;
 var prevCanvasWidth = 0;
 var prevCanvasHeight = 0;
+var currentMousePos = new Vector2D(0, 0);
+var isMouseDown = false;
 
 if (canvas && canvas.getContext) {
     init();

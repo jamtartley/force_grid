@@ -10,8 +10,8 @@ class ForceGrid {
         this.spacing = Math.min(width / desiredCells, height / desiredCells);
         this.masses = [];
 
-        this.cellsWide = width / this.spacing + 1;
-        this.cellsHigh = height / this.spacing + 1;
+        this.cellsWide = Math.ceil(width / this.spacing) + 1;
+        this.cellsHigh = Math.ceil(height / this.spacing) + 1;
         let fixedMasses = [];
 
         for (let i = 0; i < this.cellsHigh; i++) {
@@ -26,10 +26,8 @@ class ForceGrid {
                 if (i === 0 || j === 0 || i === this.cellsHigh - 1 || j === this.cellsWide - 1) {
                     let firstMass = fixedMasses[Utils.getIndexFromVector(j, i, this.cellsWide)];
                     let secondMass = this.getMassAt(j, i);
-                    let s = new Spring(firstMass, secondMass, 0.1, 0.1);
-                    console.log(s);
 
-                    this.springs.push(s);
+                    this.springs.push(new Spring(firstMass, secondMass, 0.1, 0.1));
                 }
 
                 if (j > 0) {
@@ -87,7 +85,7 @@ class ForceGrid {
 
     draw(context) {
         for (let spring of this.springs) {
-            spring.draw(context);
+            spring.draw(context, this.spacing / 2);
         }
         //for (let mass of this.masses) {
             //mass.draw(context);
