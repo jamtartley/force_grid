@@ -4,6 +4,16 @@ class Vector2D {
         this.y = y;
     }
 
+    add(other) {
+        this.x += other.x;
+        this.y += other.y
+    }
+
+    multiply(other) {
+        this.x *= other.x;
+        this.y *= other.y;
+    }
+
     static getDistance(a, b) {
         return Math.sqrt(Vector2D.getDistanceSquared(a, b));
     }

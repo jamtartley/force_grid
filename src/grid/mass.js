@@ -1,3 +1,5 @@
+import Vector2D from './vector_2d';
+
 class Mass {
     constructor(position, inverseMass) {
         this.position = position;
@@ -30,4 +32,4 @@ class Mass {
     }
 }
 
-export class Mass;
+export default Mass;

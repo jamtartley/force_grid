@@ -9,7 +9,6 @@ class Spring {
         this.stiffness = stiffness;
         this.damping = damping;
         this.targetLength = Vector2D.getDistance(firstMass.position, secondMass.position) * targetLengthFactor;
-        console.log(this.targetLength);
     }
 }
 

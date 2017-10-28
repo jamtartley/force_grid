@@ -1,3 +1,6 @@
+import Vector2D from './grid/vector_2d';
+import Mass from './grid/mass';
 import Spring from './grid/spring';
 
-let s = new Spring({position: {x:0,y:1}}, {position:{x:4,y:7}}, 1, 1);
+let m = new Mass(new Vector2D(10, 5), 0);
+console.log(m);
