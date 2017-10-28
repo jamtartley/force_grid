@@ -11,7 +11,9 @@ class Mass {
     }
 
     applyForce(force) {
-        this.acceleration += force * this.inverseMass;
+        let delta = force.clone();
+        delta.multiplyScalar(this.inverseMass);
+        this.acceleration.add(delta);
     }
 
     multiplyDamping(amount) {

@@ -37,8 +37,20 @@ class Vector2D {
         this.y /= scalar;
     }
 
+    clone() {
+        return new Vector2D(this.x, this.y);
+    }
+
+    getNegatedVector() {
+        return new Vector2D(-this.x, -this.y);
+    }
+
     static getSubtractionVector(a, b) {
         return new Vector2D(a.x - b.x, a.y - b.y);
+    }
+
+    static getAdditionVector(a, b) {
+        return new Vector2D(a.x + b.x, a.y + b.y);
     }
 
     static getDistance(a, b) {

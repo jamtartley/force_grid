@@ -28,8 +28,17 @@ class Spring {
         deltaVel.multiplyScalar(this.damping);
 
         let force = Vector2D.getSubtractionVector(deltaPos, deltaVel);
-        this.firstMass.applyForce(-force);
+        this.firstMass.applyForce(force.getNegatedVector());
         this.secondMass.applyForce(force);
+    }
+
+    draw(context) {
+        context.beginPath();
+        context.moveTo(this.firstMass.position.x, this.firstMass.position.y);
+        context.lineTo(this.secondMass.position.x, this.secondMass.position.y);
+        context.strokeStyle = 'red';
+        context.lineWidth = 10;
+        context.stroke();
     }
 }
 
