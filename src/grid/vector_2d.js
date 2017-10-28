@@ -5,7 +5,11 @@ class Vector2D {
     }
 
     getMagnitude() {
-        return Math.sqrt(this.x * this.x + this.y * this.y);
+        return Math.sqrt(this.getMagnitudeSquared());
+    }
+
+    getMagnitudeSquared() {
+        return this.x * this.x + this.y * this.y;
     }
 
     add(other) {

@@ -1,9 +1,37 @@
 import Vector2D from './grid/vector_2d';
+import ForceGrid from './grid/force_grid';
 import Mass from './grid/mass';
 import Spring from './grid/spring';
 
-let m1 = new Mass(new Vector2D(10, 5), 0);
-let m2 = new Mass(new Vector2D(1, 1), 0);
-let s = new Spring(m1, m2, 0, 0);
+function init() {
+    const frameRate = 60;
+    const millisBetweenUpdate = 1000 / frameRate;
 
-s.update();
+    //canvas.addEventListener("mousemove", mouseMove, false);
+    //canvas.addEventListener("mousedown", mouseDown, true);
+    //canvas.addEventListener("mouseup", mouseUp, false);
+    setInterval(update, millisBetweenUpdate);
+    resize();
+
+    context = canvas.getContext("2d");
+}
+
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+function update() {
+    context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    resize();
+    forceGrid.update();
+    forceGrid.draw(context);
+}
+var forceGrid = new ForceGrid(100, 500, 10);
+
+var canvas = document.getElementById('canvas');
+var context;
+
+if (canvas && canvas.getContext) {
+    init();
+}
